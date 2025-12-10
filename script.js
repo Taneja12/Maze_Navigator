@@ -393,25 +393,25 @@ class MazeGame {
         const buffer = 0.2; // Keep player away from walls
         const gridX = Math.floor(newX);
         const gridZ = Math.floor(newZ);
-        
+
         // Only move if the target cell is free
         // Basic check: center point
-        if (gridX >= 0 && gridX < this.mazeSize && 
-            gridZ >= 0 && gridZ < this.mazeSize && 
+        if (gridX >= 0 && gridX < this.mazeSize &&
+            gridZ >= 0 && gridZ < this.mazeSize &&
             this.maze[gridX][gridZ] === 0) {
-            
+
             // Advanced check: verify we aren't clipping into a neighbor wall
             // Determine relative position in cell
             const relX = newX - gridX;
             const relZ = newZ - gridZ;
-            
+
             let canMove = true;
-            
-            if (relX < buffer && this.maze[gridX-1]?.[gridZ] === 1) canMove = false;
-            if (relX > 1-buffer && this.maze[gridX+1]?.[gridZ] === 1) canMove = false;
-            if (relZ < buffer && this.maze[gridX]?.[gridZ-1] === 1) canMove = false;
-            if (relZ > 1-buffer && this.maze[gridX]?.[gridZ+1] === 1) canMove = false;
-            
+
+            if (relX < buffer && this.maze[gridX - 1]?.[gridZ] === 1) canMove = false;
+            if (relX > 1 - buffer && this.maze[gridX + 1]?.[gridZ] === 1) canMove = false;
+            if (relZ < buffer && this.maze[gridX]?.[gridZ - 1] === 1) canMove = false;
+            if (relZ > 1 - buffer && this.maze[gridX]?.[gridZ + 1] === 1) canMove = false;
+
             if (canMove) {
                 this.player.x = newX;
                 this.player.z = newZ;
@@ -626,13 +626,13 @@ class MazeGame {
         ctx.save();
         ctx.translate(this.player.x * cellSize, this.player.z * cellSize);
         ctx.rotate(-this.player.rotation); // Rotate context to match player
-        
+
         // Draw player circle
         ctx.fillStyle = '#F00';
         ctx.beginPath();
         ctx.arc(0, 0, cellSize * 0.25, 0, Math.PI * 2);
         ctx.fill();
-        
+
         // Draw heading pointer
         ctx.fillStyle = '#FFF';
         ctx.beginPath();
@@ -641,7 +641,7 @@ class MazeGame {
         ctx.lineTo(cellSize * 0.15, -cellSize * 0.1);
         ctx.closePath();
         ctx.fill();
-        
+
         ctx.restore();
     }
 
@@ -670,6 +670,7 @@ class MazeGame {
         document.getElementById('gameOverStats').textContent =
             `Time: ${document.getElementById('timer').textContent} | Score: ${this.score}`;
         document.getElementById('gameOver').style.display = 'block';
+        document.getElementById('nextLevel').style.display = 'inline-block';
     }
 
     gameOver(success) {
